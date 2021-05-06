@@ -82,7 +82,7 @@ function calculateResults(incomingData) {
 }
 
 function App() {
-  const [transactionData, setTransactionData] = useState(null);
+const [transactionData, setTransactionData] = useState(null);
 
   const columns = [
     {
@@ -117,13 +117,6 @@ function App() {
     }
   ]
 
-  function getIndividualTransactions(row) {
-    let byCustMonth = _.filter(transactionData.pointsPerTransaction, (tRow) => {
-      return row.original.custid === tRow.custid && row.original.monthNumber === tRow.month;
-    });
-    return byCustMonth;
-  }
-
   useEffect(() => {
     fetch().then((data) => {
       const results = calculateResults(data);
@@ -152,23 +145,6 @@ function App() {
               data={transactionData.summaryByCustomer}
               defaultPageSize={10}
               columns={columns}
-              SubComponent={row => {
-                return (
-                  <div className="testing-JS">
-
-                    {getIndividualTransactions(row).map(tran => {
-                      return <div className="container">
-                        <div className="row">
-                          <div className="col-8">
-                            <strong>Transaction Date:</strong> {tran.transactionDt} - <strong>$</strong>{tran.amt} - <strong>Points: </strong>{tran.points}
-                          </div>
-                        </div>
-                      </div>
-                    })}
-
-                  </div>
-                )
-              }}
             />
           </div>
         </div>
